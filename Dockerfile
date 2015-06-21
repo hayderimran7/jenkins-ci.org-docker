@@ -43,9 +43,11 @@ ENV COPY_REFERENCE_FILE_LOG /var/log/copy_reference_file.log
 RUN touch $COPY_REFERENCE_FILE_LOG && chown jenkins.jenkins $COPY_REFERENCE_FILE_LOG
 
 USER jenkins
-
+COPY plugins.sh /usr/local/bin/plugins.sh
+COPY plugins.txt /usr/local/bin/plugins.txt
+RUN /usr/local/bin/plugins.sh /usr/local/bin/plugins.txt
 COPY jenkins.sh /usr/local/bin/jenkins.sh
 ENTRYPOINT ["/usr/local/bin/jenkins.sh"]
 
 # from a derived Dockerfile, can use `RUN plugin.sh active.txt` to setup /usr/share/jenkins/ref/plugins from a support bundle
-COPY plugins.sh /usr/local/bin/plugins.sh
+#COPY plugins.sh /usr/local/bin/plugins.sh
